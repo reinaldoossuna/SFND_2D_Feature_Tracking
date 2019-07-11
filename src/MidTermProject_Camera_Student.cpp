@@ -71,14 +71,13 @@ int main(int argc, const char *argv[])
 
     // extract 2D keypoints from current image
     std::vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-    std::string detectorType = "SHITOMASI";
+    std::string detectorType = "SIFT";
 
     //// STUDENT ASSIGNMENT
     //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable std::string-based selection based on detectorType
     //// -> HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
 
     if (detectorType.compare("SHITOMASI") == 0)
-    {
       detKeypointsShiTomasi(keypoints, imgGray, false);
     else if(detectorType.compare("HARRIS") == 0)
       detKeypointsHarris(keypoints,imgGray, false);
@@ -93,9 +92,19 @@ int main(int argc, const char *argv[])
     // only keep keypoints on the preceding vehicle
     bool bFocusOnVehicle = true;
     cv::Rect vehicleRect(535, 180, 180, 150);
+    cv::rectangle(imgGray,vehicleRect,cv::Scalar(1),2);
     if (bFocusOnVehicle)
     {
-      // ...
+      std::vector<cv::KeyPoint> keypoints_roi; // create empty feature list for current image
+      for(int i = 0; i < keypoints.size(); ++i)
+      {
+        if(vehicleRect.contains(keypoints[i].pt))
+        {
+          keypoints_roi.push_back(keypoints[i]);
+        }
+      }
+      keypoints = keypoints_roi;
+      std::cout << " NOTE: Focus in the vehicle!" << std::endl;
     }
 
     //// EOF STUDENT ASSIGNMENT
