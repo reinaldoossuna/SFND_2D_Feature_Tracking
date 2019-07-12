@@ -32,3 +32,38 @@ See the classroom instruction and code comments for more details on each of thes
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./2D_feature_tracking`.
+
+## MP1
+
+To implement the dataBuffer we keep the track in size of the buffer and every time the size of the buffer exceed the max we remove the last image from the Buffer.
+
+## MP2 
+
+We modified the file matching2D.cpp to implement HARRIS, FAST, BRISK, ORB AKAZE and SIFT detectors. 
+
+
+After some test with all detectors, we could notice the FAST detector result the more numbers of keypoints. AKAZE and BRISK resulted in a good amount of keypoints too.
+
+
+## MP3
+
+The number of keypoints was limited by a rectangle, where should be located the vehicle in front of the car. We used the opencv's cv::Rect and cv::Rect::contains
+
+## MP4
+
+We implemented the BRIEF, ORB, FREAK, AKAZE and SIFT descriptors and we make they selectable by a setting string.
+
+## MP5 
+
+FLANN matching and KNN selection was implement. 
+
+OBS. In the current OpenCV  version (4.0.1) there is a bug in the FLANN implementation.Bug workaround : convert binary descriptors to floating point 
+
+## MP6
+
+We implement a KNN matchim, which look at the ratio of the best and second-best match to decide whether to keep an assoated pair of keypoints
+
+## MP7 & MP8 & MP9
+
+We have compared all detectors and descriptor, please see the xlsx file in this repo
+

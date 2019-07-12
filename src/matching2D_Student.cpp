@@ -159,6 +159,7 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool
   cv::cornerHarris(img, dst, blockSize, apertureSize, k, cv::BORDER_DEFAULT);
   cv::normalize(dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
   cv::convertScaleAbs(dst_norm, dst_norm_scaled);
+  double t = (double)cv::getTickCount();
 
   for(int i = 0 ; i < dst_norm.rows ; i++)
   {
@@ -216,6 +217,9 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool
     }
   }
 
+  t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+  //std::cout << "Harris detection with n=" << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << std::endl;
+  std::cout << 1000 * t / 1.0 << ",";
   if (bVis)
   {
     cv::Mat visImage = img.clone();
@@ -234,35 +238,31 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
   if(detectorType.compare("FAST") == 0)
   {
     detector=cv::FastFeatureDetector::create();
-
-    detector->detect(img, keypoints);
   }
 
   else if(detectorType.compare("BRISK") == 0)
   {
     detector = cv::BRISK::create();
-
-    detector->detect(img, keypoints);
   }
   else if(detectorType.compare("ORB") == 0)
   {
     detector = cv::ORB::create();
-
-    detector->detect(img, keypoints);
   }
   else if(detectorType.compare("AKAZE") == 0)
   {
     detector = cv::AKAZE::create();
-
-    detector->detect(img, keypoints);
   }
   else if(detectorType.compare("SIFT") == 0)
   {
     detector = cv::xfeatures2d::SIFT::create();
-
-    detector->detect(img, keypoints);
   }
 
+  double t = (double)cv::getTickCount();
+  detector->detect(img, keypoints);
+  t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+  //std::cout << detectorType << " detection with n=" << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << std::endl;
+
+  std::cout << 1000 * t / 1.0 << "," ;
   if (bVis)
   {
     cv::Mat visImage = img.clone();
