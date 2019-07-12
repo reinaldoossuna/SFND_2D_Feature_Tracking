@@ -67,3 +67,14 @@ We implement a KNN matchim, which look at the ratio of the best and second-best 
 
 We have compared all detectors and descriptor, please see the xlsx file in this repo
 
+### TOP 3
+
+1. FAST detector / ORB describer 
+2. FAST detector / BRIEF describer
+
+This TOP 2 was chose based in the velocity, the FAST detector was the fastest in all cases. And it was able to detect in 1.5 m/s
+,with the ORB describer was able to match with keypoint with 0.009 m/s and a success rate of 25.77%
+ 
+3. SIFT detector / FREAK describer
+
+This on was the slowest case, but in other hand, it was 52.74% of matches. If the velocity of the process it's not so important this should be your choice.
